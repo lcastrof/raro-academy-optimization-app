@@ -1,8 +1,19 @@
+import { useRef, useState } from "react";
 import { useChat } from "../../contexts/chat.context";
 
 export const ChatHeader = () => {
-  const chat = useChat();
-  const contato = chat.participantes.find(p => !p.usuarioAtual);
+  const [mensagemASerProcurada, setMensagemASerProcurada] = useState("");
+  const debounceId = useRef(0);
+  const { setBuscaMensagem, participantes } = useChat();
+  const contato = participantes.find(p => !p.usuarioAtual);
+
+  const handleInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setMensagemASerProcurada(ev.target.value);
+    clearTimeout(debounceId.current);
+    debounceId.current = window.setTimeout(() => {
+      setBuscaMensagem(ev.target.value);
+    }, 500);
+  };
 
   return (
     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
@@ -39,8 +50,8 @@ export const ChatHeader = () => {
             type="text"
             placeholder="Buscar mensagem"
             className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
-            value={ chat.buscaMensagem }
-            onChange={ event => chat.setBuscaMensagem(event?.target.value) }
+            value={ mensagemASerProcurada }
+            onChange={ handleInputChange }
           />
         </div>
       </div>
