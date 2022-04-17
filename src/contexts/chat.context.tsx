@@ -73,7 +73,7 @@ export const ChatProvider: React.FC = ({ children }) => {
       lida: false
     }
 
-    setMensagens(mensagens => [ mensagem, ...mensagens ]);
+    setMensagens(mensagens => [ ...mensagens, mensagem ]);
   };
 
   return (
