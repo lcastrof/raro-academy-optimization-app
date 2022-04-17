@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { ChatMessageProps } from "../../types/ChatMessageProps";
 import { formataHora } from "../../helpers/formatters";
 
-export const ChatMessage: React.FC<ChatMessageProps> = ({ mensagem }) => {
+export const ChatMessage: React.FC<ChatMessageProps> = memo(({ mensagem }) => {
   return (
     <div className="chat-message">
       <div className="flex items-end">
@@ -23,4 +24,4 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ mensagem }) => {
       </div>
     </div>
   );
-};
+});
