@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { classNames } from "../../helpers/classNames";
 
 const colors: string[] = [
@@ -30,6 +30,7 @@ const breakpoints: number[] = [
 
 export const ColorResponsive = () => {
   const [color, setColor] = useState('');
+  const debounceId = useRef(0);
 
   useEffect(() => {
     const alteraCor = () => {
@@ -39,10 +40,17 @@ export const ColorResponsive = () => {
       setColor(colors[breakpointIndex]);
     }
 
+    const debounceAlteraCor = () => {
+      clearTimeout(debounceId.current);
+      debounceId.current = window.setTimeout(() => {
+        alteraCor();
+      }, 250);
+    };
+    
     alteraCor();
-    window.addEventListener('resize', alteraCor);
+    window.addEventListener('resize', debounceAlteraCor);
     return () => {
-      window.removeEventListener('resize', alteraCor);
+      window.removeEventListener('resize', debounceAlteraCor);
     }
   }, []);
 
