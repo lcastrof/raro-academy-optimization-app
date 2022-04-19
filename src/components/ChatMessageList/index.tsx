@@ -1,5 +1,6 @@
 import { MutableRefObject, useEffect, useRef } from "react";
 import { useChat } from "../../contexts/chat.context";
+import { useChatMessages } from "../../contexts/messages.context";
 import { useScroll } from "../../hooks/useScroll";
 import { ChatMessage } from "../ChatMessage";
 import { ChatMessageListBottomScrollButton } from "../ChatMessageListBottomScrollButton";
@@ -9,7 +10,8 @@ import { MyChatMessage } from "../MyChatMessage";
 const TAMANHO_MEDIO_MENSAGEM_PX = 300;
 export const ChatMessageList = () => {
   const scrollRef: MutableRefObject<Element | null> = useRef(null);
-  const { mensagens, buscaMensagem, setMensagens } = useChat();
+  const { buscaMensagem } = useChat();
+  const { mensagens, setMensagens } = useChatMessages();
   const {
     scrollBottom,
     endOfScroll,

@@ -1,7 +1,7 @@
-import { ColorResponsive } from "./pages/ColorResponsive";
+import Chat from "./pages/Chat";
 
 export default function App() {
   return (
-    <ColorResponsive />
+    <Chat />
   );
 }

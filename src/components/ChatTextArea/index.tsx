@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useChat } from "../../contexts/chat.context";
+import { useChatMessages } from "../../contexts/messages.context";
 
 export const ChatTextArea = () => {
   const [ texto, setTexto  ] = useState('');
   const chat = useChat();
+  const { adicionaMensagem } = useChatMessages();
 
   useEffect(() => {
     const detectEnter = (ev: KeyboardEvent) => {
       if (ev.key === 'Enter') {
         const participante = chat.participantes.find(p => p.usuarioAtual);
-        chat.adicionaMensagem(texto, participante!);
+        adicionaMensagem(texto, participante!);
         setTexto('');
       }
     }
@@ -18,11 +20,11 @@ export const ChatTextArea = () => {
     return () => {
       document.removeEventListener('keydown', detectEnter);
     }
-  }, [chat, texto]);
+  }, [chat, texto, adicionaMensagem]);
 
   const enviarMensagem = () => {
     const participante = chat.participantes.find(p => p.usuarioAtual);
-    chat.adicionaMensagem(texto, participante!);
+    adicionaMensagem(texto, participante!);
     setTexto('');
   }
   
